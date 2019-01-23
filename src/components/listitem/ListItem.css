@@ -5,9 +5,8 @@
     color: #7e7e7e;
 }
 
-.topic-li:hover {
+.topic-li:hover, .topic-selected {
     color: #3f3f3f;
-    
 }
 
 .topic-content p {
@@ -18,4 +17,8 @@
 .topic-arrow {
     font-weight: bold;
     margin-right: 10px !important;
+}
+
+.arrow-selected {
+    transform: rotate(90deg);
 }

@@ -5,7 +5,7 @@ import ListItem from '../listitem/ListItem';
 
 import './List.css';
 
-const List = ({topics, subTopics}) => {
+const List = ({topics, subTopics, selectTopic}) => {
     return (
         <div id="list-container">
             <div id="topic-header">
@@ -15,7 +15,11 @@ const List = ({topics, subTopics}) => {
                 {topics.map(topic => {
                     // Only pass the subtopics belonging to his topic
                     let subs = subTopics.filter(subtopic => subtopic.topicId === topic.id);
-                    return <ListItem topic={topic} subtopics={subs} key={topic.id}/>
+                    return <ListItem 
+                        topic={topic} 
+                        subtopics={subs} 
+                        selectTopic={selectTopic}
+                        key={topic.id}/>
                 })}
             </ul>
         </div>
@@ -23,12 +27,9 @@ const List = ({topics, subTopics}) => {
 };
 
 List.propTypes = {
-    topics: PropTypes
-        .arrayOf(PropTypes.object)
-        .isRequired,
-    subTopics: PropTypes
-        .arrayOf(PropTypes.object)
-        .isRequired
+    topics: PropTypes.arrayOf(PropTypes.object).isRequired,
+    subTopics: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectTopic: PropTypes.func.isRequired
 };
 
 export default List;

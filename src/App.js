@@ -17,9 +17,20 @@ class App extends Component {
       {id: 2, name: 'Virtual DOM', topicId: 1, selected: false},
       {id: 3, name: 'Images', topicId: 2, selected: false}
     ],
-    currentCards: [],
-    selectedTopic: '',
-    selectedSubTopic: '',
+    currentCards: []
+  }
+
+  /**
+   * Change the selection of a topic by creating a new array which contains the altered topic.
+   * 
+   * @param id The Id of the topic to switch
+   */
+  changeTopicSelection = id => {
+    let newTopics = this.state.topics.map(topic => {
+      if (topic.id === id) return {...topic, selected: !topic.selected};
+      return topic;
+    });
+    this.setState({topics: newTopics});
   }
 
   render() {
@@ -27,7 +38,8 @@ class App extends Component {
       <div className="App">
         <List 
           topics={this.state.topics}
-          subTopics={this.state.subtopics}  
+          subTopics={this.state.subtopics}
+          selectTopic={this.changeTopicSelection}  
         />
       </div>
     );
