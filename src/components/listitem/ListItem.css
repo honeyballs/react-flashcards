@@ -1,15 +1,15 @@
 .topic-li {
     display: block;
-    padding: 15px 20px;
+    padding: 8px 20px;
     cursor: pointer;
     color: #7e7e7e;
 }
 
-.topic-li:hover, .topic-selected {
-    color: #3f3f3f;
+.topic-li:hover, .topic-selected, .subtopic-li:hover, .subtopic-selected {
+    color: #3f3f3f !important;
 }
 
-.topic-content p {
+.topic-content p, .subtopic-name {
     margin: 0;
     display: inline-block;
 }
@@ -21,4 +21,16 @@
 
 .arrow-selected {
     transform: rotate(90deg);
+}
+
+.subtopic-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.subtopic-li {
+    padding: 5px 10px;
+    color: #7e7e7e;
+    font-size: 0.9em;
 }

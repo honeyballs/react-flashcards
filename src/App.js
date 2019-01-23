@@ -33,13 +33,28 @@ class App extends Component {
     this.setState({topics: newTopics});
   }
 
+  /**
+   * Change the selection of a subtopic by creating a new array which contains the altered subtopic.
+   * Only one subtopic can be active, so we have to deselect all other subtopics.
+   * 
+   * @param id The Id of the subtopic to switch
+   */
+  changeSubTopicSelection = id => {
+    let newTopics = this.state.subtopics.map(topic => {
+      if (topic.id === id) return {...topic, selected: true};
+      return {...topic, selected: false};
+    });
+    this.setState({subtopics: newTopics});
+  }
+
   render() {
     return (
       <div className="App">
         <List 
           topics={this.state.topics}
           subTopics={this.state.subtopics}
-          selectTopic={this.changeTopicSelection}  
+          selectTopic={this.changeTopicSelection}
+          selectSubTopic={this.changeSubTopicSelection}
         />
       </div>
     );
