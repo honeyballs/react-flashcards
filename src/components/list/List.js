@@ -5,21 +5,30 @@ import ListItem from '../listitem/ListItem';
 
 import './List.css';
 
-const List = ({topics}) => {
+const List = ({topics, subTopics}) => {
     return (
         <div id="list-container">
             <div id="topic-header">
                 <h2>Topics</h2>
             </div>
             <ul id="list-content">
-                {topics.map(topic => <ListItem topic={topic} key={topic.id}/>)}
+                {topics.map(topic => {
+                    // Only pass the subtopics belonging to his topic
+                    let subs = subTopics.filter(subtopic => subtopic.topicId === topic.id);
+                    return <ListItem topic={topic} subtopics={subs} key={topic.id}/>
+                })}
             </ul>
         </div>
     )
 };
 
 List.propTypes = {
-    topics: PropTypes.arrayOf(PropTypes.object).isRequired,
+    topics: PropTypes
+        .arrayOf(PropTypes.object)
+        .isRequired,
+    subTopics: PropTypes
+        .arrayOf(PropTypes.object)
+        .isRequired
 };
 
 export default List;

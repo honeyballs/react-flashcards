@@ -25,7 +25,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <List topics={this.state.topics}/>
+        <List 
+          topics={this.state.topics}
+          subTopics={this.state.subtopics}  
+        />
       </div>
     );
   }
