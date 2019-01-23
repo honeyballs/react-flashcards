@@ -1,0 +1,21 @@
+.topic-li {
+    display: block;
+    padding: 15px 20px;
+    cursor: pointer;
+    color: #7e7e7e;
+}
+
+.topic-li:hover {
+    color: #3f3f3f;
+    
+}
+
+.topic-content p {
+    margin: 0;
+    display: inline-block;
+}
+
+.topic-arrow {
+    font-weight: bold;
+    margin-right: 10px !important;
+}
