@@ -5,6 +5,7 @@ import './App.css';
 /* Own components */
 import List from './components/list/List';
 import Cards from './components/cards/Cards';
+import TopicModal from './components/modals/topicmodal/TopicModal';
 
 class App extends Component {
 
@@ -31,7 +32,10 @@ class App extends Component {
         subTopicId: 1
       }
     ],
-    currentCards: []
+    currentCards: [],
+    topicModalVisible: false,
+    topicIdForModal: 0,
+    topicToAdd: ''
   }
 
   /**
@@ -115,14 +119,73 @@ class App extends Component {
     this.setState({cards: newCards, currentCards: this.setCurrentCards(this.state.selectedSubTopic.id, newCards)})
   }
 
+  /* Dialog functions */
+
+  /**
+   * Changes the visibility of the modal to add (sub)topics.
+   * 
+   * @param isVisible Whether the modal should be visible or not
+   * @param forSubTopic OPTIONAL: If it is meant for a topic or subtopic. Should be supplied when showing the modal, irrelevant when hiding
+   */
+  setTopicModalVisibility = (isVisible, forSubTopic) => {
+    if (forSubTopic === undefined) {
+      this.setState({topicModalVisible: isVisible});
+    } else {
+      this.setState({topicModalVisible: isVisible, modalForSubTopic: forSubTopic});
+    }
+  }
+
+  /**
+   * Updates the entered name for a new (sub)topic
+   * 
+   * @param event The input event of which the value represents the new name
+   */
+  setNewTopicName = event => {
+    this.setState({topicToAdd: event.target.value});
+  }
+
+  /**
+   * Add a (sub)topic.
+   * 
+   * @param topicId OPTIONAL: The Id of the topic the subtopic belongs to. Only needed when creating a subtopic. 
+   */
+  addTopic = topicId => {
+    if (topicId) {
+      let newTopic = {
+        id: this.state.subtopics.length + 1, 
+        name: this.state.topicToAdd,
+        topicId: topicId,
+        selected: false
+      }
+      this.setState({subtopics: [...this.state.subtopics, newTopic], topicModalVisible: false});
+    } else {
+      let newTopic = {
+        id: this.state.topics.length + 1, 
+        name: this.state.topicToAdd,
+        selected: false
+      }
+      this.setState({topics: [...this.state.topics, newTopic], topicModalVisible: false});
+    }
+  }
+
   render() {
     return (
-      <div className="App">
+      <div className="app">
+        <TopicModal 
+          visible={this.state.topicModalVisible}
+          topicId={this.state.topicIdForModal}
+          topicToAdd={this.state.topicToAdd}
+          updateName={this.setNewTopicName}
+          addTopic={this.addTopic}
+          setVisibility={this.setTopicModalVisibility}
+        />
+        <div className="content">
         <List 
           topics={this.state.topics}
           subTopics={this.state.subtopics}
           selectTopic={this.changeTopicSelection}
           selectSubTopic={this.changeSubTopicSelection}
+          showModal={this.setTopicModalVisibility}
         />
         <Cards 
           cards={this.state.currentCards}
@@ -130,6 +193,7 @@ class App extends Component {
           answerCard={this.answerCard}
           turnAround={this.turnAround}
         />
+        </div>
       </div>
     );
   }

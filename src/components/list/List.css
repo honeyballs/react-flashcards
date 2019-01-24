@@ -10,13 +10,31 @@
     background-color: #ff793f;
     color: #f7f1e3;
     overflow: hidden;
-    padding-left: 30px;
+    padding: 0 30px;
     border-radius: 3px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     -webkit-box-shadow: 0px 3px 10px -4px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 3px 10px -4px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 3px 10px -4px rgba(0, 0, 0, 0.75);
     position: relative;
     z-index: 2;
+}
+
+#topic-header h2{
+    display: inline-block;
+}
+
+#topic-add {
+    font-size: 2em;
+    cursor: pointer;
+    margin-top: -5px;
+}
+
+#topic-add:hover {
+    transform: scale(1.2);
 }
 
 #list-content {

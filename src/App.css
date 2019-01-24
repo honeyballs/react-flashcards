@@ -1,4 +1,10 @@
-.App {
+.app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content {
   margin: 50px auto;
   height: calc(100% - 100px);
   width: 90%;
