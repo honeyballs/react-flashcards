@@ -30,7 +30,7 @@ const TopicModal = ({visible, topicId, topicToAdd, updateName, addTopic, setVisi
 
 TopicModal.propTypes = {
     visible: PropTypes.bool.isRequired,
-    topicId: PropTypes.number,
+    topicId: PropTypes.string,
     topicToAdd: PropTypes.string.isRequired,
     updateName: PropTypes.func.isRequired,
     addTopic: PropTypes.func.isRequired,

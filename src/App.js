@@ -12,31 +12,13 @@ import CardModal from './components/modals/cardmodal/CardModal';
 class App extends Component {
 
   state = {
-    topics: [
-      {id: 1, name: 'React', selected: false},
-      {id: 2, name: 'Docker', selected: false},
-    ],
-    subtopics: [
-      {id:1, name: 'Redux', topicId: 1, selected: false},
-      {id: 2, name: 'Virtual DOM', topicId: 1, selected: false},
-      {id: 3, name: 'Images', topicId: 2, selected: false}
-    ],
+    topics: [],
+    subtopics: [],
     selectedSubTopic: {},
-    cards: [
-      {
-        id: 1, 
-        question: "Was ist Redux?", 
-        answer: "Redux ist eine state container Implementation für React.",
-        right: 0,
-        wrong: 0,
-        imagePath: '',
-        turned: false,
-        subTopicId: 1
-      }
-    ],
+    cards: [],
     currentCards: [],
     topicModalVisible: false,
-    topicIdForModal: 0,
+    topicIdForModal: '',
     topicToAdd: '',
     cardModalVisible: false,
     cardQuestionToAdd: '',
@@ -113,7 +95,6 @@ class App extends Component {
    * @param id The id of the card to turn
    */
   turnAround = id => {
-    console.log("turn called");
     let newCards = this.state.currentCards.map(card => {
       if (card.id === id) {
         return {...card, turned: false};
@@ -134,9 +115,9 @@ class App extends Component {
    */
   setTopicModalVisibility = (isVisible, topicId) => {
     if(isVisible) {
-      this.setState({topicModalVisible: isVisible, topicIdForModal: topicId ? topicId : 0});
+      this.setState({topicModalVisible: isVisible, topicIdForModal: topicId ? topicId : ''});
     } else {
-      this.setState({topicModalVisible: isVisible, topicIdForModal: 0, topicToAdd: ''});
+      this.setState({topicModalVisible: isVisible, topicIdForModal: '', topicToAdd: ''});
     }
   }
 
@@ -157,19 +138,19 @@ class App extends Component {
   addTopic = topicId => {
     if (topicId) {
       let newTopic = {
-        id: this.state.subtopics.length + 1, 
+        id: uuid(), 
         name: this.state.topicToAdd,
         topicId: topicId,
         selected: false
       }
-      this.setState({subtopics: [...this.state.subtopics, newTopic], topicModalVisible: false});
+      this.setState({subtopics: [...this.state.subtopics, newTopic], topicModalVisible: false, topicToAdd: ''});
     } else {
       let newTopic = {
-        id: this.state.topics.length + 1, 
+        id: uuid(), 
         name: this.state.topicToAdd,
         selected: false
       }
-      this.setState({topics: [...this.state.topics, newTopic], topicModalVisible: false});
+      this.setState({topics: [...this.state.topics, newTopic], topicModalVisible: false, topicToAdd: ''});
     }
   }
 
@@ -213,7 +194,7 @@ class App extends Component {
    */
   addCard = () => {
       let newCard = {
-        id: this.state.cards.length + 1, 
+        id: uuid(), 
         question: this.state.cardQuestionToAdd, 
         answer: this.state.cardAnswerToAdd,
         right: 0,
