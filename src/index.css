@@ -19,3 +19,25 @@ body {
   width: 100%;
   background-color: #474787;
 }
+
+
+button {
+  border: 0;
+  border-radius: 15px;
+  color: white;
+  background-color: #706fd3;
+  cursor: pointer;
+  margin-left: 15px;
+  padding: 5px 10px;
+  font-weight: bold;
+  outline: none;
+  -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+button:hover {
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
+}

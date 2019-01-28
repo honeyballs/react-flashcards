@@ -35,30 +35,6 @@
     font-size: 0.8em;
 }
 
-.card-button-bar button {
-    border: 0;
-    border-radius: 15px;
-    color: white;
-    cursor: pointer;
-    margin-left: 15px;
-    padding: 5px 10px;
-    font-weight: bold;
-    outline: none;
-    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.4);
-    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.4);
-}
-
-.card-button-bar button:hover {
-    -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
-}
-
-.turn-button {
-    background-color: #706fd3;
-}
-
 .dont-know-button {
     background-color: #b33939;
 }

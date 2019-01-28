@@ -125,13 +125,13 @@ class App extends Component {
    * Changes the visibility of the modal to add (sub)topics.
    * 
    * @param isVisible Whether the modal should be visible or not
-   * @param forSubTopic OPTIONAL: If it is meant for a topic or subtopic. Should be supplied when showing the modal, irrelevant when hiding
+   * @param topicId OPTIONAL: If it is meant for a topic or subtopic. Should be supplied when showing the modal, irrelevant when hiding
    */
-  setTopicModalVisibility = (isVisible, forSubTopic) => {
-    if (forSubTopic === undefined) {
+  setTopicModalVisibility = (isVisible, topicId) => {
+    if (topicId === undefined) {
       this.setState({topicModalVisible: isVisible});
     } else {
-      this.setState({topicModalVisible: isVisible, modalForSubTopic: forSubTopic});
+      this.setState({topicModalVisible: isVisible, topicIdForModal: topicId});
     }
   }
 

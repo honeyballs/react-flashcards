@@ -22,6 +22,7 @@ const List = ({topics, subTopics, selectTopic, selectSubTopic, showModal}) => {
                         selectTopic={selectTopic}
                         selectSubTopic={selectSubTopic}
                         key={topic.id}
+                        showAddModal={showModal}
                     />
                 })}
             </ul>

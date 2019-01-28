@@ -18,9 +18,10 @@ const TopicModal = ({visible, topicId, topicToAdd, updateName, addTopic, setVisi
                     onChange={updateName}
                     value={topicToAdd}
                 />
+                <br />
                 <span id="t-modal-buttons">
                     <button id="t-model-cancel" onClick={event => setVisibility(false)}>Cancel</button>
-                    <button id="t-model-add" onClick={event => addTopic()}>Add</button>
+                    <button id="t-model-add" onClick={event => addTopic(topicId)}>Add</button>
                 </span>
             </div>
         </div>

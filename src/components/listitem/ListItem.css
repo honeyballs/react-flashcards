@@ -23,6 +23,23 @@
     transform: rotate(90deg);
 }
 
+.topic-content {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-topic-add {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.sub-topic-add:hover {
+    transform: scale(1.2);
+}
+
 .subtopic-list {
     list-style-type: none;
     padding-left: 20px;
