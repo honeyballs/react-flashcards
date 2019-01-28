@@ -6,20 +6,19 @@ import './TopicModal.css';
 const TopicModal = ({visible, topicId, topicToAdd, updateName, addTopic, setVisibility}) => {
     return (
         <div 
-            id="t-modal-background" 
-            className={`${visible ? 'active' : ''}`}
+            className={`${visible ? 'modal-background active' : 'modal-background'}`}
             onClick={event => setVisibility(false)}
         >
-            <div id="t-modal-container" onClick={event => event.stopPropagation()}>
+            <div className="modal-container" onClick={event => event.stopPropagation()}>
                 <h4>{`Add ${topicId ? 'sub' : ''}topic`}</h4>
                 <input 
-                    id="t-model-input"
+                    className="modal-input"
                     type="text"
                     onChange={updateName}
                     value={topicToAdd}
                 />
                 <br />
-                <span id="t-modal-buttons">
+                <span className="modal-buttons">
                     <button id="t-model-cancel" onClick={event => setVisibility(false)}>Cancel</button>
                     <button id="t-model-add" onClick={event => addTopic(topicId)}>Add</button>
                 </span>
