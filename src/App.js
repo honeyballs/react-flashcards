@@ -9,6 +9,12 @@ import Cards from './components/cards/Cards';
 import TopicModal from './components/modals/topicmodal/TopicModal';
 import CardModal from './components/modals/cardmodal/CardModal';
 
+const DELETION_CONST = {
+  topic: 0,
+  subtopic: 1,
+  card: 2
+};
+
 class App extends Component {
 
   state = {
@@ -22,7 +28,8 @@ class App extends Component {
     topicToAdd: '',
     cardModalVisible: false,
     cardQuestionToAdd: '',
-    cardAnswerToAdd: ''
+    cardAnswerToAdd: '',
+    deletionOf: -1
   }
 
   /**
@@ -213,6 +220,87 @@ class App extends Component {
         cardModalVisible: false
       })
   }
+
+    /* Deletion dialog functions */
+  
+    /**
+     * Deceides which function to use to delete an element according to the deletion type.
+     * 
+     * @param id The id of the element to be deleted
+     * @param type What type of element will be deleted
+     */
+    deleteElement = (id, type) => {
+      switch (type) {
+        case DELETION_CONST.topic:
+          this.deleteTopic(id);
+          break;
+        case DELETION_CONST.subtopic:
+          this.deleteSubTopic(id);
+          break;
+        case DELETION_CONST.card:
+          this.deleteCard(id);
+          break;
+        default:
+          break;
+      }
+    }
+
+    /**
+     * Delete a topic and all connected subtopics and cards.
+     * 
+     * @param id The id of the topic to be deleted
+     */
+    deleteTopic = id => {
+      let newTopics = this.state.topics.filter(topic => topic.id !== id);
+      let remainingSubTopics = this.state.subtopics.filter(subtopic => subtopic.topicId !== id);
+      let subTopicsToRemove = this.state.subtopics.filter(subtopic => subtopic.topicId === id);
+      let remainingCards = this.state.cards;
+      let selected = false;
+      subTopicsToRemove.forEach(subtopic => {
+        remainingCards = remainingCards.filter(card => card.subTopicId !== subtopic.id);
+        selected = this.state.selectedSubTopic.id === subtopic.id
+      })
+      if (selected) {
+        this.setState({
+          topics: newTopics, 
+          subtopics: remainingSubTopics, 
+          selectedSubTopic: {}, 
+          cards: remainingCards,
+          currentCards: []
+        });
+      } else {
+        this.setState({
+          topics: newTopics,
+          subtopics: remainingSubTopics,
+          cards: remainingCards
+        })
+      }
+    }
+
+    /**
+     * Delete a subtopic and all connected cards.
+     * 
+     * @param id The id of the subtopic to be deleted
+     */
+    deleteSubTopic = id => {
+      let remainingSubTopics = this.state.subtopics.filter(subtopic => subtopic.id !== id);
+      let remainingCards = this.state.cards.filter(card => card.subTopicId !== id);
+      if (this.state.selectedSubTopic.id === id) {
+        this.setState({subtopics: remainingSubTopics, selectedSubTopic: {}, cards: remainingCards, currentCards: []})
+      } else {
+        this.setState({subtopics: remainingSubTopics, cards: remainingCards})
+      }
+    }
+
+    /**
+     * Delete a card.
+     * 
+     * @param id The id of the card to be deleted
+     */
+    deleteCard = id => {
+      let remainingCards = this.state.cards.filter(card => card.id !== id);
+      this.setState({cards: remainingCards, currentCards: this.setCurrentCards(this.state.selectedSubTopic, remainingCards)});
+    }
 
   render() {
     return (
