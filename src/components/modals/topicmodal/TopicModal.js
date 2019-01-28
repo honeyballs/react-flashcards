@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './TopicModal.css';
-
 const TopicModal = ({visible, topicId, topicToAdd, updateName, addTopic, setVisibility}) => {
     return (
         <div 
@@ -20,8 +18,8 @@ const TopicModal = ({visible, topicId, topicToAdd, updateName, addTopic, setVisi
                 />
                 <br />
                 <span className="modal-buttons">
-                    <button id="t-model-cancel" onClick={event => setVisibility(false)}>Cancel</button>
-                    <button id="t-model-add" onClick={event => addTopic(topicId)}>Add</button>
+                    <button id="t-modal-cancel" onClick={event => setVisibility(false)}>Cancel</button>
+                    <button id="t-modal-add" onClick={event => addTopic(topicId)}>Add</button>
                 </span>
             </div>
         </div>

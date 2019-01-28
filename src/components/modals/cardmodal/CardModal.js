@@ -28,8 +28,8 @@ const CardModal = ({visible, setVisibility, cardQuestion, cardAnswer, setQuestio
                 />
                 <br />
                 <span className="modal-buttons">
-                    <button id="t-model-cancel" onClick={event => setVisibility(false)}>Cancel</button>
-                    <button id="t-model-add" onClick={event => addCard()}>Add</button>
+                    <button id="t-modal-cancel" onClick={event => setVisibility(false)}>Cancel</button>
+                    <button id="t-modal-add" onClick={event => addCard()}>Add</button>
                 </span>
             </div>
         </div>

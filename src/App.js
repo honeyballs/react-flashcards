@@ -8,8 +8,9 @@ import List from './components/list/List';
 import Cards from './components/cards/Cards';
 import TopicModal from './components/modals/topicmodal/TopicModal';
 import CardModal from './components/modals/cardmodal/CardModal';
+import ConfirmModal from './components/modals/confirmmodal/ConfirmModal';
 
-const DELETION_CONST = {
+export const DELETION_CONST = {
   topic: 0,
   subtopic: 1,
   card: 2
@@ -29,7 +30,9 @@ class App extends Component {
     cardModalVisible: false,
     cardQuestionToAdd: '',
     cardAnswerToAdd: '',
-    deletionOf: -1
+    confirmModalVisible: false,
+    deletionOf: -1,
+    idToDelete: ''
   }
 
   /**
@@ -222,6 +225,21 @@ class App extends Component {
   }
 
     /* Deletion dialog functions */
+
+    /**
+    * Changes the visibility of the modal to confirm deletion.
+    * 
+    * @param isVisible Whether the modal should be visible or not
+    * @param id The id of the element which should potentially be deleted
+    * @param type What type of element should be deleted: topic, subtopic or card
+    */
+    setConfirmModalVisibility = (isVisible, id, type) => {
+      if (isVisible) {
+        this.setState({confirmModalVisible: isVisible, idToDelete: id, deletionOf: type});
+      } else {
+        this.setState({confirmModalVisible: isVisible, idToDelete: '', deletionOf: -1});
+      }
+    }
   
     /**
      * Deceides which function to use to delete an element according to the deletion type.
@@ -321,6 +339,12 @@ class App extends Component {
           setQuestion={this.setNewCardQuestion}
           setAnswer={this.setNewCardAnswer}
           addCard={this.addCard}
+        />
+        <ConfirmModal 
+          visible={this.state.confirmModalVisible}
+          setVisibility={this.setConfirmModalVisibility}
+          type={this.state.deletionOf}
+          deleteElement={() => this.deleteElement(this.state.idToDelete, this.state.deletionOf)}
         />
         <div className="content">
         <List 
