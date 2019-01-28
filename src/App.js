@@ -39,7 +39,6 @@ class App extends Component {
     topicIdForModal: 0,
     topicToAdd: '',
     cardModalVisible: false,
-    subTopicIdForCard: 0,
     cardQuestionToAdd: '',
     cardAnswerToAdd: ''
   }
@@ -182,11 +181,11 @@ class App extends Component {
    * @param isVisible Whether the modal should be visible or not
    * @param subTopicId OPTIONAL: The subtopic this flashcard belongs to. Only required when making modal visible
    */
-  setCardModalVisibility = (isVisible, subTopicId) => {
+  setCardModalVisibility = isVisible => {
     if (isVisible) {
-      this.setState({cardModalVisible: isVisible, subTopicIdForCard: subTopicId});
+      this.setState({cardModalVisible: isVisible});
     } else {
-      this.setState({cardModalVisible: isVisible, subTopicIdForCard: 0, cardQuestionToAdd: '', cardAnswerToAdd: ''});
+      this.setState({cardModalVisible: isVisible, cardQuestionToAdd: '', cardAnswerToAdd: ''});
     }
   }
 
@@ -221,7 +220,7 @@ class App extends Component {
         wrong: 0,
         imagePath: '',
         turned: false,
-        subTopicId: this.state.subTopicIdForCard
+        subTopicId: this.state.selectedSubTopic.id
       }
       this.setState({
         cards: [...this.state.cards, newCard],
@@ -245,7 +244,7 @@ class App extends Component {
         />
         <CardModal 
           visible={this.state.cardModalVisible}
-          subTopicId={this.state.subTopicIdForCard}
+          subTopic={this.state.selectedSubTopic}
           setVisibility={this.setCardModalVisibility}
           cardQuestion={this.state.cardQuestionToAdd}
           cardAnswer={this.state.cardAnswerToAdd}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CardModal = ({visible, subTopicId, setVisibility, cardQuestion, cardAnswer, setQuestion, setAnswer, addCard}) => {
+const CardModal = ({visible, subTopic, setVisibility, cardQuestion, cardAnswer, setQuestion, setAnswer, addCard}) => {
     return (
         <div
             className={`${visible ? 'modal-background active' : 'modal-background'}`}
@@ -14,7 +14,7 @@ const CardModal = ({visible, subTopicId, setVisibility, cardQuestion, cardAnswer
 
 CardModal.propTypes = {
     visible: PropTypes.bool.isRequired,
-    subTopicId: PropTypes.number.isRequired,
+    subTopic: PropTypes.object.isRequired,
     setVisibility: PropTypes.func.isRequired,
     cardQuestion: PropTypes.string.isRequired,
     cardAnswer: PropTypes.string.isRequired,
