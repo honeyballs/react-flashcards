@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuid from 'uuid/v1';
 
 import './App.css';
 
@@ -6,6 +7,7 @@ import './App.css';
 import List from './components/list/List';
 import Cards from './components/cards/Cards';
 import TopicModal from './components/modals/topicmodal/TopicModal';
+import CardModal from './components/modals/cardmodal/CardModal';
 
 class App extends Component {
 
@@ -35,7 +37,11 @@ class App extends Component {
     currentCards: [],
     topicModalVisible: false,
     topicIdForModal: 0,
-    topicToAdd: ''
+    topicToAdd: '',
+    cardModalVisible: false,
+    subTopicIdForCard: 0,
+    cardQuestionToAdd: '',
+    cardAnswerToAdd: ''
   }
 
   /**
@@ -119,7 +125,7 @@ class App extends Component {
     this.setState({cards: newCards, currentCards: this.setCurrentCards(this.state.selectedSubTopic.id, newCards)})
   }
 
-  /* Dialog functions */
+  /* Topic dialog functions */
 
   /**
    * Changes the visibility of the modal to add (sub)topics.
@@ -128,10 +134,10 @@ class App extends Component {
    * @param topicId OPTIONAL: If it is meant for a topic or subtopic. Should be supplied when showing the modal, irrelevant when hiding
    */
   setTopicModalVisibility = (isVisible, topicId) => {
-    if (topicId === undefined) {
-      this.setState({topicModalVisible: isVisible});
+    if(isVisible) {
+      this.setState({topicModalVisible: isVisible, topicIdForModal: topicId ? topicId : 0});
     } else {
-      this.setState({topicModalVisible: isVisible, topicIdForModal: topicId});
+      this.setState({topicModalVisible: isVisible, topicIdForModal: 0, topicToAdd: ''});
     }
   }
 
@@ -168,6 +174,64 @@ class App extends Component {
     }
   }
 
+  /* Card dialog functions */
+  
+  /**
+   * Changes the visibility of the modal to add flashcards.
+   * 
+   * @param isVisible Whether the modal should be visible or not
+   * @param subTopicId OPTIONAL: The subtopic this flashcard belongs to. Only required when making modal visible
+   */
+  setCardModalVisibility = (isVisible, subTopicId) => {
+    if (isVisible) {
+      this.setState({cardModalVisible: isVisible, subTopicIdForCard: subTopicId});
+    } else {
+      this.setState({cardModalVisible: isVisible, subTopicIdForCard: 0, cardQuestionToAdd: '', cardAnswerToAdd: ''});
+    }
+  }
+
+  /**
+   * Updates the entered question for a new flashcard.
+   * 
+   * @param event The input event of which the value represents the new question
+   */
+  setNewCardQuestion = event => {
+    this.setState({cardQuestionToAdd: event.target.value});
+  }
+
+  /**
+   * Updates the entered answer for a new flashcard.
+   * 
+   * @param event The input event of which the value represents the new question
+   */
+  setNewCardAnswer = event => {
+    this.setState({cardAnswerToAdd: event.target.value});
+  }
+
+  /**
+   * Add a flashcard.
+   * 
+   */
+  addCard = () => {
+      let newCard = {
+        id: this.state.cards.length + 1, 
+        question: this.state.cardQuestionToAdd, 
+        answer: this.state.cardAnswerToAdd,
+        right: 0,
+        wrong: 0,
+        imagePath: '',
+        turned: false,
+        subTopicId: this.state.subTopicIdForCard
+      }
+      this.setState({
+        cards: [...this.state.cards, newCard],
+        cardQuestionToAdd: '',
+        cardAnswerToAdd: '',
+        subTopicIdForCard: '',
+        cardModalVisible: false
+      })
+  }
+
   render() {
     return (
       <div className="app">
@@ -178,6 +242,16 @@ class App extends Component {
           updateName={this.setNewTopicName}
           addTopic={this.addTopic}
           setVisibility={this.setTopicModalVisibility}
+        />
+        <CardModal 
+          visible={this.state.cardModalVisible}
+          subTopicId={this.state.subTopicIdForCard}
+          setVisibility={this.setCardModalVisibility}
+          cardQuestion={this.state.cardQuestionToAdd}
+          cardAnswer={this.state.cardAnswerToAdd}
+          setQuestion={this.setNewCardQuestion}
+          setAnswer={this.setNewCardAnswer}
+          addCard={this.addCard}
         />
         <div className="content">
         <List 
