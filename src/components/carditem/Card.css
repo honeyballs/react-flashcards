@@ -11,8 +11,27 @@
     overflow: hidden;
 }
 
-.card h3 {
+.card-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-head h3 {
     margin: 20px;
+}
+
+.card-delete {
+    font-weight: bold;
+    margin-right: 20px;
+    color: #b33939;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.card-delete:hover {
+    transform: scale(1.2);
 }
 
 .card p {

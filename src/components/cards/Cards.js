@@ -5,7 +5,7 @@ import './Cards.css';
 
 import Card from '../carditem/Card';
 
-const Cards = ({cards, currentTopic, answerCard, turnAround, showModal}) => {
+const Cards = ({cards, currentTopic, answerCard, turnAround, showModal, showDeleteModal}) => {
     return (
         <div id="card-container">
             <div id="card-header">
@@ -17,6 +17,7 @@ const Cards = ({cards, currentTopic, answerCard, turnAround, showModal}) => {
                     card={card} 
                     answerCard={answerCard}
                     turnAround={turnAround}
+                    showDeleteModal={showDeleteModal}
                     key={card.id} 
                 />)}
             </ul>
@@ -29,7 +30,8 @@ Cards.propTypes = {
     currentTopic: PropTypes.string,
     answerCard: PropTypes.func.isRequired,
     turnAround: PropTypes.func.isRequired,
-    showModal: PropTypes.func.isRequired
+    showModal: PropTypes.func.isRequired,
+    showDeleteModal: PropTypes.func.isRequired
 }
 
 export default Cards;

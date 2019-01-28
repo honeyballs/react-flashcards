@@ -261,6 +261,7 @@ class App extends Component {
         default:
           break;
       }
+      this.setState({confirmModalVisible: false});
     }
 
     /**
@@ -360,6 +361,7 @@ class App extends Component {
           answerCard={this.answerCard}
           turnAround={this.turnAround}
           showModal={this.setCardModalVisibility}
+          showDeleteModal={id => this.setConfirmModalVisibility(true, id, DELETION_CONST.card)}
         />
         </div>
       </div>

@@ -28,7 +28,7 @@ const ConfirmModal = ({visible, setVisibility, type, deleteElement}) => {
                 <p>{`Are you sure you want to delete this ${elementName}?`}</p>
                 <span className="modal-buttons">
                     <button id="t-modal-cancel" onClick={event => setVisibility(false)}>Cancel</button>
-                    <button id="t-modal-add" onClick={event => deleteElement()}>Add</button>
+                    <button id="t-modal-add" onClick={event => deleteElement()}>Delete</button>
                 </span>
             </div>
         </div>
