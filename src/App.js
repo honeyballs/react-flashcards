@@ -222,8 +222,10 @@ class App extends Component {
         turned: false,
         subTopicId: this.state.selectedSubTopic.id
       }
+      let updatedCards = [...this.state.cards, newCard];
       this.setState({
-        cards: [...this.state.cards, newCard],
+        cards: updatedCards,
+        currentCards: this.setCurrentCards(this.state.selectedSubTopic.id, updatedCards),
         cardQuestionToAdd: '',
         cardAnswerToAdd: '',
         subTopicIdForCard: '',
@@ -244,7 +246,6 @@ class App extends Component {
         />
         <CardModal 
           visible={this.state.cardModalVisible}
-          subTopic={this.state.selectedSubTopic}
           setVisibility={this.setCardModalVisibility}
           cardQuestion={this.state.cardQuestionToAdd}
           cardAnswer={this.state.cardAnswerToAdd}

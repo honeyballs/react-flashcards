@@ -16,6 +16,7 @@ const TopicModal = ({visible, topicId, topicToAdd, updateName, addTopic, setVisi
                     type="text"
                     onChange={updateName}
                     value={topicToAdd}
+                    placeholder={'Topic name'}
                 />
                 <br />
                 <span className="modal-buttons">

@@ -1,0 +1,9 @@
+#card-modal-textarea {
+    width: 90%;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    border: 2px solid #706fd3;
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+}
