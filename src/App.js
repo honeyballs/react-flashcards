@@ -265,6 +265,7 @@ class App extends Component {
           currentTopic={this.state.selectedSubTopic.name}
           answerCard={this.answerCard}
           turnAround={this.turnAround}
+          showModal={this.setCardModalVisibility}
         />
         </div>
       </div>

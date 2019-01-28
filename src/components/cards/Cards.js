@@ -5,11 +5,12 @@ import './Cards.css';
 
 import Card from '../carditem/Card';
 
-const Cards = ({cards, currentTopic, answerCard, turnAround}) => {
+const Cards = ({cards, currentTopic, answerCard, turnAround, showModal}) => {
     return (
         <div id="card-container">
             <div id="card-header">
                 <h2>{currentTopic ? currentTopic : "Cards"}</h2>
+                {currentTopic && <span id="card-add" onClick={event => showModal(true)}>+</span>}
             </div>
             <ul id="card-list">
                 {cards.map(card => <Card 
@@ -27,7 +28,8 @@ Cards.propTypes = {
     cards: PropTypes.arrayOf(PropTypes.object).isRequired,
     currentTopic: PropTypes.string,
     answerCard: PropTypes.func.isRequired,
-    turnAround: PropTypes.func.isRequired
+    turnAround: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired
 }
 
 export default Cards;
