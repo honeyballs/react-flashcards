@@ -261,7 +261,7 @@ class App extends Component {
         default:
           break;
       }
-      this.setState({confirmModalVisible: false});
+      this.setState({confirmModalVisible: false, idToDelete: '', deletionOf: -1});
     }
 
     /**
@@ -354,6 +354,7 @@ class App extends Component {
           selectTopic={this.changeTopicSelection}
           selectSubTopic={this.changeSubTopicSelection}
           showModal={this.setTopicModalVisibility}
+          showDeleteModal={(id, type) => this.setConfirmModalVisibility(true, id, type)}
         />
         <Cards 
           cards={this.state.currentCards}

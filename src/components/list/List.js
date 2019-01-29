@@ -5,7 +5,7 @@ import ListItem from '../listitem/ListItem';
 
 import './List.css';
 
-const List = ({topics, subTopics, selectTopic, selectSubTopic, showModal}) => {
+const List = ({topics, subTopics, selectTopic, selectSubTopic, showModal, showDeleteModal}) => {
     return (
         <div id="list-container">
             <div id="topic-header">
@@ -23,6 +23,7 @@ const List = ({topics, subTopics, selectTopic, selectSubTopic, showModal}) => {
                         selectSubTopic={selectSubTopic}
                         key={topic.id}
                         showAddModal={showModal}
+                        showDeleteModal={showDeleteModal}
                     />
                 })}
             </ul>
@@ -35,7 +36,8 @@ List.propTypes = {
     subTopics: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectTopic: PropTypes.func.isRequired,
     selectSubTopic: PropTypes.func.isRequired,
-    showModal: PropTypes.func.isRequired
+    showModal: PropTypes.func.isRequired,
+    showDeleteModal: PropTypes.func.isRequired
 };
 
 export default List;

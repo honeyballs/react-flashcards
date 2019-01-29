@@ -31,9 +31,15 @@
     align-items: center;
 }
 
+.topic-interaction {
+    display: block;
+}
+
 .sub-topic-add {
+    display: inline-block;
     font-weight: bold;
     font-size: 1.2em;
+    margin-right: 15px;
 }
 
 .sub-topic-add:hover {
@@ -50,4 +56,20 @@
     padding: 5px 10px;
     color: #7e7e7e;
     font-size: 0.9em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topic-delete {
+    display: inline-block;
+    font-weight: bold;
+    color: #b33939;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.topic-delete:hover {
+    transform: scale(1.2);
 }
