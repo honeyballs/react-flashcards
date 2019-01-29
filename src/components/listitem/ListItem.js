@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DELETION_CONST } from '../../App';
+
+// Redux imports
+import { connect } from 'react-redux';
+import { selectTopic, selectSubTopic, showAddTopicModal, showDeleteModal } from '../../ducks/duck';
+import { DELETION_CONST } from '../../ducks/duck';
 
 import './ListItem.css';
 
@@ -20,7 +24,7 @@ const ListItem = ({topic, subtopics, selectTopic, selectSubTopic, showAddModal, 
                         className="sub-topic-add" 
                         onClick={event => {
                             event.stopPropagation();
-                            showAddModal(true, topic.id);
+                            showAddModal(topic.id);
                         }}
                     >
                         +
@@ -70,4 +74,19 @@ ListItem.propTypes = {
     showDeleteModal: PropTypes.func.isRequired
 };
 
-export default ListItem;
+// Return the read props this component receives
+const mapStateToProps = (state, ownProps) => ({
+    topic: ownProps.topic,
+    subtopics: ownProps.subtopics
+});
+
+// Map functions to props which dispatch actions on the store
+const mapDispatchToProps = dispatch => ({
+    selectTopic: id => dispatch(selectTopic(id)),
+    selectSubTopic: id => dispatch(selectSubTopic(id)),
+    showAddModal: id => dispatch(showAddTopicModal(true, id)),
+    showDeleteModal: (id, type) => dispatch(showDeleteModal(true, id, type))
+});
+
+// Redux creates a wrapped component and provides the required props
+export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

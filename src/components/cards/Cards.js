@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Redux imports
+import { connect } from 'react-redux';
+import { showAddCardModal } from '../../ducks/duck';
+
 import './Cards.css';
 
 import Card from '../carditem/Card';
 
-const Cards = ({cards, currentTopic, answerCard, turnAround, showModal, showDeleteModal}) => {
+const Cards = ({cards, currentTopic, showModal}) => {
     return (
         <div id="card-container">
             <div id="card-header">
                 <h2>{currentTopic ? currentTopic : "Cards"}</h2>
-                {currentTopic && <span id="card-add" onClick={event => showModal(true)}>+</span>}
+                {currentTopic && <span id="card-add" onClick={event => showModal()}>+</span>}
             </div>
             <ul id="card-list">
                 {cards.map(card => <Card 
                     card={card} 
-                    answerCard={answerCard}
-                    turnAround={turnAround}
-                    showDeleteModal={showDeleteModal}
                     key={card.id} 
                 />)}
             </ul>
@@ -28,10 +29,19 @@ const Cards = ({cards, currentTopic, answerCard, turnAround, showModal, showDele
 Cards.propTypes = {
     cards: PropTypes.arrayOf(PropTypes.object).isRequired,
     currentTopic: PropTypes.string,
-    answerCard: PropTypes.func.isRequired,
-    turnAround: PropTypes.func.isRequired,
     showModal: PropTypes.func.isRequired,
-    showDeleteModal: PropTypes.func.isRequired
 }
 
-export default Cards;
+// Return the read props this component receives
+const mapStateToProps = state => ({
+    cards: state.cards,
+    currentTopic: state.selectedSubTopic.name
+});
+
+// Map functions to props which dispatch actions on the store
+const mapDispatchToProps = dispatch => ({
+    showModal: () => dispatch(showAddCardModal(true))
+});
+
+// Redux creates a wrapped component and provides the required props
+export default connect(mapStateToProps, mapDispatchToProps)(Cards);

@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Redux imports
+import { connect } from 'react-redux';
+import { answerCard, turnCard, showDeleteModal } from '../../ducks/duck';
+import { DELETION_CONST } from '../../ducks/duck';
+
 import './Card.css';
 
 const Card = ({card, answerCard, turnAround, showDeleteModal}) => {
@@ -36,4 +41,17 @@ Card.propTypes = {
     showDeleteModal: PropTypes.func.isRequired
 }
 
-export default Card;
+// Return the read props this component receives
+const mapStateToProps = (state, ownProps) => ({
+    card: ownProps.card
+});
+
+// Map functions to props which dispatch actions on the store
+const mapDispatchToProps = dispatch => ({
+    answerCard: (id, isCorrect) => dispatch(answerCard(id, isCorrect)),
+    turnAround: id => dispatch(turnCard(id)),
+    showDeleteModal: id => dispatch(showDeleteModal(true, id, DELETION_CONST.card))
+});
+
+// Redux creates a wrapped component and provides the required props
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

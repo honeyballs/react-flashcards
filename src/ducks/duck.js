@@ -51,15 +51,16 @@ const initialState = {
 export default (state = initialState, action = {}) => {
     switch (action.type) {
         // Topic cases
-        case ADD_TOPIC:
+        case ADD_TOPIC: {
             let newTopic = {
                 id: uuid(),
                 name: state.topicToAdd,
                 selected: false
             }
             let newTopics = [...state.topics, newTopic];
-            return {...state, topics: newTopics};
-        case SELECT_TOPIC:
+            return {...state, topics: newTopics, topicToAdd: '', topicIdForModal: '', topicModalVisible: false};
+        }
+        case SELECT_TOPIC: {
             let newTopics = state.topics.map(topic => {
                 if (topic.id === action.id) {
                     return {...topic, selected: !topic.selected};
@@ -67,7 +68,8 @@ export default (state = initialState, action = {}) => {
                 return topic;
             });
             return {...state, topics: newTopics};
-        case REMOVE_TOPIC:
+        }
+        case REMOVE_TOPIC: {
             let newTopics = state.topics.filter(topic => topic.id !== action.id);
             let remainingSubTopics = state.subtopics.filter(subtopic => subtopic.topicId !== action.id);
             let subTopicsToRemove = state.subtopics.filter(subtopic => subtopic.topicId === action.id);
@@ -84,19 +86,26 @@ export default (state = initialState, action = {}) => {
                     subtopics: remainingSubTopics, 
                     selectedSubTopic: {}, 
                     cards: remainingCards,
-                    currentCards: []
+                    currentCards: [],
+                    deletionOf: -1,
+                    confirmModalVisible: false,
+                    idToDelete: ''
                 };
             } else {
                 return {
                     ...state,
                     topics: newTopics,
                     subtopics: remainingSubTopics,
-                    cards: remainingCards
+                    cards: remainingCards,
+                    deletionOf: -1,
+                    confirmModalVisible: false,
+                    idToDelete: ''
                 }
             }
+        }
 
         // Subtopic cases
-        case ADD_SUBTOPIC:
+        case ADD_SUBTOPIC: {
             let newTopic = {
                 id: uuid(), 
                 name: state.topicToAdd,
@@ -104,8 +113,9 @@ export default (state = initialState, action = {}) => {
                 selected: false
             }
             let newTopics = [...state.subtopics, newTopic];
-            return {...state, subtopics: newTopics};
-        case SELECT_SUBTOPIC: 
+            return {...state, subtopics: newTopics, topicToAdd: '', topicIdForModal: '', topicModalVisible: false};
+        }
+        case SELECT_SUBTOPIC: {
             let selectedSubTopic = {};
             let newTopics = state.subtopics.map(topic => {
                 if (topic.id === action.id) {
@@ -116,17 +126,35 @@ export default (state = initialState, action = {}) => {
             });
             let currentCards = state.cards.filter(card => card.subTopicId === selectedSubTopic.id);
             return {...state, subtopics: newTopics, selectedSubTopic: selectedSubTopic, currentCards: currentCards}
-        case REMOVE_SUBTOPIC:
+        }
+        case REMOVE_SUBTOPIC: {
             let remainingSubTopics = state.subtopics.filter(subtopic => subtopic.id !== action.id);
             let remainingCards = state.cards.filter(card => card.subTopicId !== action.id);
             if (state.selectedSubTopic.id === action.id) {
-                return {...state, subtopics: remainingSubTopics, selectedSubTopic: {}, cards: remainingCards, currentCards: []};
+                return {
+                    ...state, 
+                    subtopics: remainingSubTopics, 
+                    selectedSubTopic: {}, 
+                    cards: remainingCards, 
+                    currentCards: [],
+                    deletionOf: -1,
+                    confirmModalVisible: false,
+                    idToDelete: ''
+                };
             } else {
-                return {...state, subtopics: remainingSubTopics, cards: remainingCards};
+                return {
+                    ...state, 
+                    subtopics: remainingSubTopics, 
+                    cards: remainingCards,
+                    deletionOf: -1,
+                    confirmModalVisible: false,
+                    idToDelete: ''
+                };
             }
+        }
 
         // Card cases    
-        case ADD_CARD:
+        case ADD_CARD: {
             let newCard = {
                 id: uuid(), 
                 question: state.cardQuestionToAdd, 
@@ -148,16 +176,18 @@ export default (state = initialState, action = {}) => {
                 subTopicIdForCard: '',
                 cardModalVisible: false
             };
-        case ANSWER_CARD: 
+        }
+        case ANSWER_CARD: {
             let newCards = state.cards.map(card => {
                 if (card.id === action.id) {
-                    return isCorrect ? {...card, right: card.right + 1, turned: true} : {...card, wrong: card.wrong + 1, turned: true};
+                    return action.isCorrect ? {...card, right: card.right + 1, turned: true} : {...card, wrong: card.wrong + 1, turned: true};
                 }
                 return card;
             });
             let currentCards = newCards.filter(card => card.id === state.selectedSubTopic.id);
             return {...state, cards: newCards, currentCards: currentCards};
-        case TURN_CARD:
+        }
+        case TURN_CARD: {
             let newCards = state.cards.map(card => {
                 if (card.id === action.id) {
                     return {...card, turned: false};
@@ -166,30 +196,42 @@ export default (state = initialState, action = {}) => {
             });
             let currentCards = newCards.filter(card => card.id === state.selectedSubTopic.id);
             return {...state, cards: newCards, currentCards: currentCards};
-        case REMOVE_CARD:
+        }
+        case REMOVE_CARD: {
             let remainingCards = state.cards.filter(card => card.id !== action.id);
-            let currentCards = newCards.filter(card => card.id === state.selectedSubTopic.id);
-            return {...state, cards: remainingCards, currentCards: currentCards};
+            let currentCards = remainingCards.filter(card => card.id === state.selectedSubTopic.id);
+            return {
+                ...state, 
+                cards: remainingCards, 
+                currentCards: currentCards,
+                deletionOf: -1,
+                confirmModalVisible: false,
+                idToDelete: ''
+            };
+        }
 
         // Modal cases
-        case SHOW_ADD_TOPIC_MODAL:
+        case SHOW_ADD_TOPIC_MODAL: {
             if(action.isVisible) {
                 return {...state, topicModalVisible: action.isVisible, topicIdForModal: action.topicId ? action.topicId : ''};
             } else {
                 return {...state, topicModalVisible: action.isVisible, topicIdForModal: '', topicToAdd: ''};
             }
-        case SHOW_ADD_CARD_MODAL:
+        }
+        case SHOW_ADD_CARD_MODAL: {
             if (action.isVisible) {
                 return {...state, cardModalVisible: action.isVisible};
               } else {
                 return {...state, cardModalVisible: action.isVisible, cardQuestionToAdd: '', cardAnswerToAdd: ''};
             }
-        case SHOW_DELETE_CONFIRM_MODAL:
+        }
+        case SHOW_DELETE_CONFIRM_MODAL: {
             if (action.isVisible) {
-                return {...state, confirmModalVisible: action.isVisible, idToDelete: action.id, deletionOf: action.type};
+                return {...state, confirmModalVisible: action.isVisible, idToDelete: action.id, deletionOf: action.delType};
             } else {
                 return {...state, confirmModalVisible: action.isVisible, idToDelete: '', deletionOf: -1};
             }
+        }
 
         // Event cases
         case UPDATE_TOPIC_NAME:
@@ -266,7 +308,7 @@ export const showAddCardModal = visibility => {
 }
 
 export const showDeleteModal = (visibility, id, type) => {
-    return {type: SHOW_DELETE_CONFIRM_MODAL, isVisible: visibility, id, type};
+    return {type: SHOW_DELETE_CONFIRM_MODAL, isVisible: visibility, id, delType: type};
 }
 
 export const updateTopicName = name => {
