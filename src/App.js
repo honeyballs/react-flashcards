@@ -88,7 +88,6 @@ class App extends Component {
    * @param isCorrect Whether the person knew the correct answer or not
    */
   answerCard = (id, isCorrect) => {
-    console.log("answer called");
     let newCards = this.state.currentCards.map(card => {
       if (card.id === id) {
         return isCorrect ? {...card, right: card.right + 1, turned: true} : {...card, wrong: card.wrong + 1, turned: true};
@@ -105,7 +104,7 @@ class App extends Component {
    * @param id The id of the card to turn
    */
   turnAround = id => {
-    let newCards = this.state.currentCards.map(card => {
+    let newCards = this.state.cards.map(card => {
       if (card.id === id) {
         return {...card, turned: false};
       }
